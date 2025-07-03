@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+
+    <title>Bootstrap Starter Template</title>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">Front Controller App</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a
+                class="nav-link active"
+                aria-current="page"
+                href="#"
+                onclick="FrontController.handleRequest('home')"
+                >Home</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                href="#"
+                onclick="FrontController.handleRequest('subtab')"
+                >Sub Tab</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container mt-5" id="view">
+      <h1>Welcome to Your New Website!</h1>
+      <p class="lead">
+        This is a starter template with a responsive navigation bar powered by
+        Bootstrap 5.
+      </p>
+      <p>
+        You can start building your amazing application from here. This main
+        container provides some padding to get you started.
+      </p>
+    </div>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+
+    <script>
+      async function getContent(contentURL) {
+        let response = await fetch(contentURL);
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+
+        const data = await response.text();
+        return data;
+      }
+
+      const views = {
+        home: "./home.html",
+        subtab: "./subTab.html",
+      };
+
+      const FrontController = {
+        handleRequest: async function (route) {
+          var viewURL = views[route];
+          console.log("View = " + viewURL);
+          let content = await getContent(viewURL);
+          document.getElementById("view").innerHTML = content;
+        },
+      };
+
+      window.onload = () => FrontController.handleRequest("home");
+    </script>
+  </body>
+</html>
